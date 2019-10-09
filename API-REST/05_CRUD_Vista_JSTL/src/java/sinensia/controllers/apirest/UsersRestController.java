@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,8 +102,7 @@ public class UsersRestController extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setAccessControlHeaders(resp);
         try {
-            String jsonUser = req.getReader().readLine();
-            User userObject = new Gson().fromJson(jsonUser, User.class);
+            User userObject = new Gson().fromJson(req.getReader(), User.class);
            userSrv.remove(userObject.getId());
             resp.getWriter().print("OK");
         } catch (SQLException ex) {

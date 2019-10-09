@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../usuario.service';
 import { User } from 'src/model/user';
 import { UsuarioRestService } from '../usuario-rest.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-usuario',
@@ -19,15 +19,22 @@ export class UsuarioComponent implements OnInit {
   age: string;
   email: string;
   password: string;
-  constructor(private userService: UsuarioService, private userRestService: UsuarioRestService) { }
+  constructor(private userRestService: UsuarioRestService) { }
 
   ngOnInit() {
-    this.getUsuarios();
+    this.getUsuariosAPI();
     this.modoEdicion = false;
     this.modoBorrar = false;
   }
-  getUsuarios() {
-    this.userService.getUsuarios().subscribe(user => this.users = user);
+  
+  getUsuariosAPI()
+  {
+    let observerArray = this.userRestService.getUsuarios();
+
+    let funcionRellena = (usuariosRecib) => {
+      this.users = usuariosRecib;
+    }
+    observerArray.subscribe(funcionRellena);
   }
   onSelect(user: User) {
     this.userSelected = user;
@@ -35,9 +42,15 @@ export class UsuarioComponent implements OnInit {
   }
   enableEdition() {
     this.modoEdicion = !this.modoEdicion;
+    if(this.modoBorrar) {
+      this.modoBorrar = false;
+    }
   }
   enableDeleteById() {
     this.modoBorrar = !this.modoBorrar;
+    if(this.modoEdicion) {
+      this.modoEdicion = false;
+    }
   }
   
   sendUser() {
@@ -49,5 +62,7 @@ export class UsuarioComponent implements OnInit {
     console.log(nuevoUser.name + ' email: ' + nuevoUser.email);
     
     this.userRestService.add(nuevoUser).subscribe(userAux => this.userInsertado = userAux);
+    this.getUsuariosAPI();
+    this.enableEdition();
   }
 }
