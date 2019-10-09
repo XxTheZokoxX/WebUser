@@ -61,4 +61,9 @@ export class UsuarioComponent implements OnInit {
     
     this.userRestService.update(nuevoUser).subscribe(userAux => this.userInsertado = userAux);
   }
+  delete(){
+    let nuevoUser = new User();
+    nuevoUser.id = parseInt(this.id);
+    this.userRestService.delete(nuevoUser).subscribe(userAux => this.userInsertado = userAux);
+  }
 }
