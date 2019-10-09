@@ -7,17 +7,20 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { MenuComponent } from './menu/menu.component';
 import { MensajesComponent } from './mensajes/mensajes.component';
 
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
     UsuarioComponent,
     MenuComponent,
     MensajesComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
