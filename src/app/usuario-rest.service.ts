@@ -7,9 +7,9 @@ import { User } from 'src/model/user';
   providedIn: 'root'
 })
 export class UsuarioRestService {
-  uriApiRest = 'http://localhost:8084/CRUD_Vista_JSTL/api/usuarios';
+  uriApiRest = 'http://localhost:8084/CRUD_Vista_JSTL/api/users';
   httpOption = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true' })
   };
   constructor(private httpCli: HttpClient) { }
 

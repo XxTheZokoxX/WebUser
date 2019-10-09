@@ -14,6 +14,7 @@ export class UsuarioComponent implements OnInit {
   modoBorrar: boolean;
   users: User[];
 
+  userInsertado: User;
   name: string;
   age: string;
   email: string;
@@ -47,6 +48,6 @@ export class UsuarioComponent implements OnInit {
     nuevoUser.age = parseInt(this.age);
     console.log(nuevoUser.name + ' email: ' + nuevoUser.email);
     
-    this.userRestService.add(nuevoUser);
+    this.userRestService.add(nuevoUser).subscribe(userAux => this.userInsertado = userAux);
   }
 }
