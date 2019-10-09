@@ -15,6 +15,7 @@ export class UsuarioComponent implements OnInit {
   users: User[];
 
   userInsertado: User;
+  id: string;
   name: string;
   age: string;
   email: string;
@@ -59,10 +60,20 @@ export class UsuarioComponent implements OnInit {
     nuevoUser.email = this.email;
     nuevoUser.password = this.password;
     nuevoUser.age = parseInt(this.age);
-    console.log(nuevoUser.name + ' email: ' + nuevoUser.email);
     
     this.userRestService.add(nuevoUser).subscribe(userAux => this.userInsertado = userAux);
     this.getUsuariosAPI();
     this.enableEdition();
+  }
+  
+  update(){
+    let nuevoUser = new User();
+    nuevoUser.id = parseInt(this.id);
+    nuevoUser.name = this.name;
+    nuevoUser.email = this.email;
+    nuevoUser.password = this.password;
+    nuevoUser.age = parseInt(this.age);
+    
+    this.userRestService.update(nuevoUser).subscribe(userAux => this.userInsertado = userAux);
   }
 }

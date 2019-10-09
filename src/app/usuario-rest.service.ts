@@ -24,4 +24,15 @@ export class UsuarioRestService {
 
   }
 
+  update(nuevoUser: User):Observable<User>{
+    return this.httpCli.put<User>(this.uriApiRest, nuevoUser, this.httpOption);
+  }
+
+  delete(nuevoUser: User): Observable<User>{
+    this.httpOption['body'] = {
+      id:nuevoUser.id
+    };
+    return this.httpCli.delete<User>(this.uriApiRest, this.httpOption);
+  }
+
 }
