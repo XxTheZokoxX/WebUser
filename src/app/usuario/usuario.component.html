@@ -1,24 +1,70 @@
-<div class="container-fluid w-50">
-    <h1 class="mt-5 mb-5 text-center">Registro</h1>
-    <form>
-        <div class="form-group">
-            <label for="exampleInputPassword1">ID</label>
-            <input type="number" class="form-control" id="idUser" placeholder="Introduce el id">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Nombre</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Introduce el nombre">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">Introduce el email del usuario</small>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Edad</label>
-            <input type="number" class="form-control" id="edad" placeholder="Introduce la edad">
-        </div>
-        <button type="submit" class="btn btn-dark">Registrar</button>
-    </form>
+<div class="container-fluid w-75 justify-content-center" *ngIf="users">
+  <table class="table table-hover table-dark mt-5 ">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Age</th>
+        <th scope="col">Password</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let usuario of users " [class.selected]="usuario === userSelected" (click)="onSelect(usuario)">
+      <tr>
+        <th scope="row">{{usuario.id}}</th>
+        <td>{{usuario.name}}</td>
+        <td>{{usuario.email}}</td>
+        <td>{{usuario.age}}</td>
+        <td>{{usuario.password}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-outline-dark mr-1" (click)="enableEdition()">Añadir Usuario</button>
+  <button class="btn btn-outline-dark mx-1" (click)="enableDeleteById()">Borrar Usuario</button>
+</div>
+
+
+
+
+
+
+<div class="container-fluid w-50 mb-5" *ngIf="modoEdicion">
+  <h3 class="mt-5 mb-5 text-center">Modo Detalle</h3>
+  <form>
+    <div class="form-group">
+      <label for="inputName">Name</label>
+      <input [(ngModel)]="name" type="text" class="form-control" id="nombre" placeholder="Introduce el nombre"
+        value="" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email</label>
+      <input [(ngModel)]="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+        value="" [ngModelOptions]="{standalone: true}">
+      <small id="emailHelp" class="form-text text-muted">Introduce el email del usuario</small>
+    </div>
+    <div class="form-group">
+      <label for="inputAge">Age</label>
+      <input [(ngModel)]="age" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="edad" placeholder="Introduce la edad" value="">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" [ngModelOptions]="{standalone: true}" class="form-control" id="edad" placeholder="Introduce la contraseña"
+        value="" [(ngModel)]="password">
+    </div>
+    <button type="submit" class="btn btn-dark" (click)="sendUser()">Registrar</button>
+  </form>
+</div>
+
+<div class="container-fluid w-50 mb-5" *ngIf="modoBorrar">
+
+  <h3 class="mt-5 mb-5 text-center">Borrar Por ID</h3>
+  <form>
+    <div class="form-group">
+      <label for="inputName">ID</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Introduce el nombre"
+        value="{{userSelected.name}}">
+    </div>
+    <button type="submit" class="btn btn-danger">Borrar Usuario</button>
+
+  </form>
 </div>
