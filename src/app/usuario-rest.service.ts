@@ -9,7 +9,7 @@ import { User } from 'src/model/user';
 export class UsuarioRestService {
   uriApiRest = 'http://localhost:8084/CRUD_Vista_JSTL/api/users';
   httpOption = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
   constructor(private httpCli: HttpClient) { }
 
@@ -22,6 +22,17 @@ export class UsuarioRestService {
   add(nuevoUser: User): Observable<User> {
     return this.httpCli.post<User>(this.uriApiRest, nuevoUser, this.httpOption);
 
+  }
+
+  update(nuevoUser: User):Observable<User>{
+    return this.httpCli.put<User>(this.uriApiRest, nuevoUser, this.httpOption);
+  }
+
+  delete(nuevoUser: User): Observable<User>{
+    this.httpOption['body'] = {
+      id:nuevoUser.id
+    };
+    return this.httpCli.delete<User>(this.uriApiRest, this.httpOption);
   }
 
 }
